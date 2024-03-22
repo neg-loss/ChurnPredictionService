@@ -23,6 +23,8 @@ jobs:
         run: |
           echo ${{ secrets.GKE_SECRET_CPS }} > gcp-sa-key.json
           gcloud auth activate-service-account --key-file=gcp-sa-key.json
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: gcp-sa-key.json
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@main
