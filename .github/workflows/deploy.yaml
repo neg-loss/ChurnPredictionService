@@ -23,6 +23,11 @@ jobs:
       - name: Let's copy gcp credentials
         run: echo "${{secrets.GKE_SECRET_CPS}}" > gcp_credentials.json
 
+      - name: Authenticate with Google Cloud
+        run: |
+          echo ${{ secrets.GKE_SECRET_CPS }} > gcp-sa-key.json
+          gcloud auth activate-service-account --key-file=gcp-sa-key.json
+
       - name: Configure Docker to use GCR
         run: |
           gcloud auth configure-docker
@@ -41,10 +46,7 @@ jobs:
           curl https://sdk.cloud.google.com | bash
           exec -l $SHELL
           gcloud --version
-      - name: Authenticate with Google Cloud
-        run: |
-          echo ${{ secrets.GKE_SECRET_CPS }} > gcp-sa-key.json
-          gcloud auth activate-service-account --key-file=gcp-sa-key.json
+      
       - name: Configure kubectl
         run: |
           gcloud container clusters get-credentials autopilot-cluster-1 --zone asia-south1 --project data-science-project
