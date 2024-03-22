@@ -13,20 +13,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@main
-        with:
-          project_id: neemar
-          service_account_key: ${{ secrets.GKE_SECRET_CPS }}
-          export_default_credentials: true
-
-      - name: Let's copy gcp credentials
-        run: echo "${{secrets.GKE_SECRET_CPS}}" > gcp_credentials.json
+      - name: Install Google Cloud SDK
+        run: |
+          curl https://sdk.cloud.google.com | bash
+          exec -l $SHELL
+          gcloud --version
 
       - name: Authenticate with Google Cloud
         run: |
           echo ${{ secrets.GKE_SECRET_CPS }} > gcp-sa-key.json
           gcloud auth activate-service-account --key-file=gcp-sa-key.json
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@main
+        with:
+          project_id: neemar
+          # service_account_key: ${{ secrets.GKE_SECRET_CPS }}
+          # export_default_credentials: true
+
+      - name: Let's copy gcp credentials
+        run: echo "${{secrets.GKE_SECRET_CPS}}" > gcp_credentials.json
 
       - name: Configure Docker to use GCR
         run: |
@@ -40,12 +46,6 @@ jobs:
         run: |
           docker build -t gcr.io/neemar/churn-prediction-service:${{ github.sha }} .
           docker push gcr.io/neemar/churn-prediction-service:${{ github.sha }}
-
-      - name: Install Google Cloud SDK
-        run: |
-          curl https://sdk.cloud.google.com | bash
-          exec -l $SHELL
-          gcloud --version
       
       - name: Configure kubectl
         run: |
