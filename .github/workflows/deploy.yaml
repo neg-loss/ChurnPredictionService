@@ -48,6 +48,3 @@ jobs:
       - name: Deploy to GKE
         run: |
           kubectl apply -f ./github/workflows/deploy.yaml
-
-
-
