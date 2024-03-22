@@ -29,12 +29,22 @@ jobs:
           docker build -t gcr.io/neemar/churn-prediction-service:${{ github.sha }} .
           docker push gcr.io/neemar/churn-prediction-service:${{ github.sha }}
 
+      - name: Install Google Cloud SDK
+        run: |
+          curl https://sdk.cloud.google.com | bash
+          exec -l $SHELL
+          gcloud --version
+      - name: Authenticate with Google Cloud
+        run: |
+          echo ${{ secrets.GKE_SECRET_CPS }} > gcp-sa-key.json
+          gcloud auth activate-service-account --key-file=gcp-sa-key.json
+      - name: Configure kubectl
+        run: |
+          gcloud container clusters get-credentials autopilot-cluster-1 --zone asia-south1 --project data-science-project
+
       - name: Deploy to GKE
-        uses: google-github-actions/deploy-gke@main
-        with:
-          credentials: ${{ secrets.GKE_SECRET_CPS }}
-          project_id: data-science-project
-          cluster: autopilot-cluster-1
-          zone: asia-south1
-          manifest: ./github/workflows/deploy.yaml
-          image_tag: ${{ github.sha }}
+        run: |
+          kubectl apply -f ./github/workflows/deploy.yaml
+
+
+
