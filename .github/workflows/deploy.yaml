@@ -26,6 +26,10 @@ jobs:
       - name: Configure Docker to use GCR
         run: |
           gcloud auth configure-docker
+      
+      - name: Grant Storage Object Viewer Role
+        run: |
+          gcloud projects add-iam-policy-binding data-science-project --member=serviceAccount:sample-service-account@data-science-project-418009.iam.gserviceaccount.com --role=roles/storage.objectViewer
 
       - name: Build and Push Docker image
         run: |
