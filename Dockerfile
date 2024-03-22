@@ -1,4 +1,4 @@
-FROM python:3.8.19
+FROM brunneis/python:3.8.3-ubuntu-20.04
 
 WORKDIR ./src/app/
 
