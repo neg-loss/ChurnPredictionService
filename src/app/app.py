@@ -68,4 +68,5 @@ def infer_xgboost(user_id):
 
 
 if __name__== "__main__":
+    # we are just demonstrating so not worrying about prod/debug env or any optimizations here.
     app.run(port=8080)
