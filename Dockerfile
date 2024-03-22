@@ -1,4 +1,4 @@
-FROM brunneis/python:3.8.3-ubuntu-20.04
+FROM gcr.io/google.com/cloudsdktool/cloud-sdk
 
 WORKDIR ./src/app/
 
