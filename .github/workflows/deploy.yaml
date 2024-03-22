@@ -34,7 +34,7 @@ jobs:
           # export_default_credentials: true
 
       - name: Let's copy gcp credentials
-        run: echo "${{secrets.GKE_SECRET_CPS}}" > gcp_credentials.json
+        run: echo "${{secrets.GKE_SECRET_CPS}}"  | base64 --decode > gcp_credentials.json
 
       - name: Configure Docker to use GCR
         run: |
