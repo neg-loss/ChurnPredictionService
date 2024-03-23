@@ -20,7 +20,7 @@ jobs:
           gcloud --version
 
       - name: Authenticate with Google Cloud and install kubectl
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@87fba63a27a31ee4fe3f272b924b34215e225a05
         with:
           service_account_key: ${{ secrets.GKE_SECRET-CPS}}
           project_id: data-science-project-418009
