@@ -45,12 +45,12 @@ jobs:
           docker build -t asia-south1-docker.pkg.dev/data-science-project-418009/dockerregistry/churn-prediction-service:${{ github.sha }} .
           docker push asia-south1-docker.pkg.dev/data-science-project-418009/dockerregistry/churn-prediction-service:${{ github.sha }}
       
-      - name: Configure kubectl
-        run: |
-          gcloud components install kubectl
-          gcloud components install gke-gcloud-auth-plugin
-          gcloud container clusters get-credentials autopilot-cluster-1 --zone asia-south1 --project data-science-project-418009
+      # - name: Configure kubectl
+      #   run: |
+      #     gcloud components install kubectl
+      #     gcloud components install gke-gcloud-auth-plugin
+      #     gcloud container clusters get-credentials autopilot-cluster-1 --zone asia-south1 --project data-science-project-418009
 
-      - name: Deploy to GKE
-        run: |
-          kubectl apply -f ./infra/kubernetes/resources.yaml
+      # - name: Deploy to GKE
+      #   run: |
+      #     kubectl apply -f ./infra/kubernetes/resources.yaml
