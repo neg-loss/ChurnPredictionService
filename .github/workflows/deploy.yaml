@@ -19,7 +19,7 @@ jobs:
           exec -l $SHELL
           gcloud --version
 
-      - name: Authenticate with Google Cloud
+      - name: Authenticate with Google
         run: |
           echo "${{ secrets.GKE_SECRET_CPS }}" | base64 --decode > gcp-sa-key.json
           gcloud auth activate-service-account --key-file=gcp-sa-key.json
