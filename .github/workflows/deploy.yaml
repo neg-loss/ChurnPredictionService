@@ -23,7 +23,7 @@ jobs:
         run: |
           echo "${{ secrets.GKE_SECRET_CPS }}" | base64 --decode > gcp-sa-key.json
           gcloud auth activate-service-account --key-file=gcp-sa-key.json
-          gcloud projects add-iam-policy-binding data-science-project --member=serviceAccount:sample-service-account@data-science-project-418009.iam.gserviceaccount.com --role=roles/storage.objectViewer
+          # gcloud projects add-iam-policy-binding data-science-project --member=serviceAccount:sample-service-account@data-science-project-418009.iam.gserviceaccount.com --role=roles/storage.objectViewer
         
 
         env:
