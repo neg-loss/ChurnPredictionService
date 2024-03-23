@@ -45,8 +45,8 @@ jobs:
       
       - name: Build and Push Docker image
         run: |
-          docker build -t gcr.io/neemar/churn-prediction-service:${{ github.sha }} .
-          docker push gcr.io/neemar/churn-prediction-service:${{ github.sha }}
+          docker build -t asia-south1-docker.pkg.dev/data-science-project-418009/dockerregistry/churn-prediction-service:${{ github.sha }} .
+          docker push asia-south1-docker.pkg.dev/data-science-project-418009/dockerregistry/churn-prediction-service:${{ github.sha }}
       
       - name: Configure kubectl
         run: |
