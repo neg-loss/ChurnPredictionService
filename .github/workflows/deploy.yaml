@@ -5,27 +5,6 @@ on:
     branches:
       - main
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: churn-prediction-service
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: churn-prediction-service
-  template:
-    metadata:
-      labels:
-        app: churn-prediction-service
-    spec:
-      containers:
-      - name: churn-prediction-service-container
-        image: asia-south1-docker.pkg.dev/data-science-project-418009/dockerregistry/churn-prediction-service:${{ github.sha }}
-        ports:
-        - containerPort: 8080
-
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -75,4 +54,4 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-          kubectl apply -f ./.github/workflows/deploy.yaml
+          kubectl apply -f ./infra/kubernetes/resources.yaml
