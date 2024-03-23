@@ -19,24 +19,17 @@ jobs:
           exec -l $SHELL
           gcloud --version
 
-      - name: Authenticate with Google Cloud and install kubectl
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@87fba63a27a31ee4fe3f272b924b34215e225a05
-        with:
-          service_account_key: ${{ secrets.GKE_SECRET-CPS}}
-          project_id: data-science-project-418009
-          export_default_credentials: true
-          kubeconfig: ${{ runner.workspace }}/kubeconfig
-          # echo "${{ secrets.GKE_SECRET_CPS }}" | base64 --decode > gcp-sa-key.json
-          # gcloud auth activate-service-account --key-file=gcp-sa-key.json
-          # gcloud projects add-iam-policy-binding data-science-project --member=serviceAccount:sample-service-account@data-science-project-418009.iam.gserviceaccount.com --role=roles/storage.objectViewer
-          
-        # env:
-        #   GOOGLE_APPLICATION_CREDENTIALS: gcp-sa-key.json
+      - name: Authenticate with Google Cloud
+        run: |
+          echo "${{ secrets.GKE_SECRET_CPS }}" | base64 --decode > gcp-sa-key.json
+          gcloud auth activate-service-account --key-file=gcp-sa-key.json
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: gcp-sa-key.json
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@main
         with:
-          project_id: neemar
+          project_id: data-science-project-418009
           # service_account_key: ${{ secrets.GKE_SECRET_CPS }}
           # export_default_credentials: true
 
